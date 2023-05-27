@@ -15,12 +15,16 @@ class AzureOauthProvider extends AbstractProvider implements ProviderInterface
 
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://login.microsoftonline.com/common/oauth2/authorize', $state);
+        $tenantId = config('azure-oath.tenant_id');
+
+        return $this->buildAuthUrlFromBase("https://login.microsoftonline.com/{$tenantId}/oauth2/authorize", $state);
     }
 
     protected function getTokenUrl()
     {
-        return 'https://login.microsoftonline.com/common/oauth2/token';
+        $tenantId = config('azure-oath.tenant_id');
+
+        return "https://login.microsoftonline.com/{$tenantId}/oauth2/token";
     }
 
     protected function getTokenFields($code)
